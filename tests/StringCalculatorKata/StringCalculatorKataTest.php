@@ -39,7 +39,7 @@ class StringCalculatorKataTest extends TestCase
     }
 
     /**
-     * Step 3 - Allow New Line as delimiter or string
+     * Step 3 - Allow New Line as delimiter of string
      */
     public function testNewLineAsDelimiter(): void
     {
@@ -48,5 +48,17 @@ class StringCalculatorKataTest extends TestCase
         $this->assertEquals(6, $stringCalculator->add("1\n2,3"));
         $this->assertEquals(6, $stringCalculator->add("1\n2\n3"));
         $this->assertEquals(6, $stringCalculator->add("1,2\n3"));
+    }
+
+    /**
+     * Step 4 - Test different delimiters
+     */
+    public function testDifferentDelimiters(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(3, $stringCalculator->add("//;\n1;2"));
+        $this->assertEquals(16, $stringCalculator->add("//#\n1#2#5#8"));
+        $this->assertEquals(20, $stringCalculator->add("//|\n1|2|5|8|4"));
     }
 }

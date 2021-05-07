@@ -17,8 +17,14 @@ class StringCalculatorKata
     {
         $result = 0;
 
-        $numbers = str_replace("\n", ",", $numbers);
-        $arrayNumbers = explode(",", $numbers);
+        $delimiter = ",";
+        if (substr($numbers, 0, 2) === "//") {
+            $delimiter =  substr($numbers, 2, strpos($numbers, "\n") - 2);
+            $numbers = str_replace("//$delimiter", "", $numbers);
+        }
+
+        $numbers = str_replace("\n", $delimiter, $numbers);
+        $arrayNumbers = explode($delimiter, $numbers);
 
         foreach ($arrayNumbers as $num) {
             $result += (int) $num;
