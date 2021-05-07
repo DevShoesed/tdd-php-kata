@@ -37,4 +37,16 @@ class StringCalculatorKataTest extends TestCase
         $this->assertEquals(25, $stringCalculator->add("8,9,2,1,5"));
         $this->assertEquals(32, $stringCalculator->add("8,9,2,1,5,7"));
     }
+
+    /**
+     * Step 3 - Allow New Line as delimiter or string
+     */
+    public function testNewLineAsDelimiter(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(6, $stringCalculator->add("1\n2,3"));
+        $this->assertEquals(6, $stringCalculator->add("1\n2\n3"));
+        $this->assertEquals(6, $stringCalculator->add("1,2\n3"));
+    }
 }

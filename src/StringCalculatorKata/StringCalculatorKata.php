@@ -17,6 +17,7 @@ class StringCalculatorKata
     {
         $result = 0;
 
+        $numbers = str_replace("\n", ",", $numbers);
         $arrayNumbers = explode(",", $numbers);
 
         foreach ($arrayNumbers as $num) {
