@@ -28,4 +28,13 @@ class StringCalculatorKataTest extends TestCase
     /**
      * Step 2 - 
      */
+    public function testUnknownAmountsOfNumbers(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(6, $stringCalculator->add("1,2,3"));
+        $this->assertEquals(20, $stringCalculator->add("8,9,2,1"));
+        $this->assertEquals(25, $stringCalculator->add("8,9,2,1,5"));
+        $this->assertEquals(32, $stringCalculator->add("8,9,2,1,5,7"));
+    }
 }
