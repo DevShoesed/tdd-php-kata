@@ -61,4 +61,17 @@ final class FizzBuzzKataTest extends TestCase
 
         $this->assertEquals('FizzBuzz', $response);
     }
+
+
+    /**
+     * Test from x to y 
+     */
+    public function testRunFrom1To10(): void
+    {
+        $fizzBuzz = new FizzBuzzKata();
+
+        $response = $fizzBuzz->run(1, 10);
+
+        $this->assertEquals('1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz', $response);
+    }
 }

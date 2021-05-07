@@ -6,7 +6,6 @@ namespace App\FizzBuzzKata;
 
 class FizzBuzzKata
 {
-
     /**
      * convert
      *
@@ -16,18 +15,41 @@ class FizzBuzzKata
     public function convert(int $number): string
     {
 
-        if ($number % 5 === 0 && $number % 3 === 0) {
+        if ($this->isMultipleOf($number, 5) && $this->isMultipleOf($number, 3)) {
             return 'FizzBuzz';
         }
 
-        if ($number % 5 === 0) {
+        if ($this->isMultipleOf($number, 5)) {
             return 'Buzz';
         }
 
-        if ($number % 3 === 0) {
+        if ($this->isMultipleOf($number, 3)) {
             return 'Fizz';
         }
 
         return (string) $number;
+    }
+
+    /**
+     * Run Fizz buzz converter from $i to $n
+     * 
+     * @param int $min
+     * @param int $max
+     * 
+     * @return string $output
+     */
+    public function run(int $min, int $max): string
+    {
+        $output = [];
+        for ($i = $min; $i <= $max; $i++) {
+            $output[] = $this->convert($i);
+        }
+
+        return implode(", ", $output);
+    }
+
+    private function isMultipleOf(int $number, int $moltiplicator): bool
+    {
+        return $number % $moltiplicator === 0;
     }
 }
