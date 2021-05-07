@@ -15,5 +15,8 @@
             "App\\": "src/",
             "App\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit --colors --testdox "
     }
 }
