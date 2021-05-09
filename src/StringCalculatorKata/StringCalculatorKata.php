@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\StringCalculatorKata;
 
+use Exception;
+
 class StringCalculatorKata
 {
 
@@ -16,6 +18,7 @@ class StringCalculatorKata
     public function add(string $numbers): int
     {
         $result = 0;
+        $negativeNumbers = [];
 
         $delimiter = ",";
         if (substr($numbers, 0, 2) === "//") {
@@ -27,9 +30,15 @@ class StringCalculatorKata
         $arrayNumbers = explode($delimiter, $numbers);
 
         foreach ($arrayNumbers as $num) {
+            if ($num < 0) {
+                $negativeNumbers[] = $num;
+            }
             $result += (int) $num;
         }
 
+        if (count($negativeNumbers) > 0) {
+            throw new Exception("negatives not allowed '" . implode(",", $negativeNumbers) . "'");
+        }
         return $result;
     }
 }
