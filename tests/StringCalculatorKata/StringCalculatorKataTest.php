@@ -86,4 +86,16 @@ class StringCalculatorKataTest extends TestCase
         $this->assertEquals(2, $stringCalculator->add("2,1000"));
         $this->assertEquals(11, $stringCalculator->add("5,1000,6"));
     }
+
+    /**
+     * Step 7 - Delimiters can be of any length
+     */
+    public function testMultipleDelimitersLenght(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(6, $stringCalculator->add("//[***]\n1***2***3"));
+        $this->assertEquals(6, $stringCalculator->add("//[##]\n1##2##3"));
+        $this->assertEquals(6, $stringCalculator->add("//[#..#]\n1#..#2#..#3"));
+    }
 }

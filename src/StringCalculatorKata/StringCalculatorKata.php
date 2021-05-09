@@ -26,6 +26,10 @@ class StringCalculatorKata
             $numbers = str_replace("//$delimiter", "", $numbers);
         }
 
+        if (strlen($delimiter) > 1) {
+            $delimiter = substr($delimiter, 1, strlen($delimiter) - 2);
+        }
+
         $numbers = str_replace("\n", $delimiter, $numbers);
         $arrayNumbers = explode($delimiter, $numbers);
 
