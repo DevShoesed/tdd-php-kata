@@ -33,7 +33,9 @@ class StringCalculatorKata
             if ($num < 0) {
                 $negativeNumbers[] = $num;
             }
-            $result += (int) $num;
+            if ($num < 1000) {
+                $result += (int) $num;
+            }
         }
 
         if (count($negativeNumbers) > 0) {

@@ -75,4 +75,15 @@ class StringCalculatorKataTest extends TestCase
 
         $stringCalculator->add("2,-5,3,-8");
     }
+
+    /**
+     * Step 6 - Numbers bigger than 1000 should be ignored
+     */
+    public function testNumberBiggerThan100ShouldBeIgnored(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(2, $stringCalculator->add("2,1000"));
+        $this->assertEquals(11, $stringCalculator->add("5,1000,6"));
+    }
 }
