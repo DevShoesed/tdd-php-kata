@@ -18,7 +18,6 @@ class StringCalculatorKata
     public function add(string $numbers): int
     {
         $result = 0;
-        $negativeNumbers = [];
 
         $delimiter = ",";
         if (substr($numbers, 0, 2) === "//") {
@@ -33,18 +32,31 @@ class StringCalculatorKata
         $numbers = str_replace("\n", $delimiter, $numbers);
         $arrayNumbers = explode($delimiter, $numbers);
 
+        $this->checkNegativeNumbers($arrayNumbers);
+
         foreach ($arrayNumbers as $num) {
-            if ($num < 0) {
-                $negativeNumbers[] = $num;
-            }
             if ($num < 1000) {
                 $result += (int) $num;
             }
         }
 
+        return $result;
+    }
+
+    /**
+     * Check Negative number and throw Exception
+     * 
+     * @param array $numbers
+     * 
+     */
+    protected function checkNegativeNumbers(array $numbers): void
+    {
+        $negativeNumbers = array_filter($numbers, function ($num) {
+            return $num < 0;
+        });
+
         if (count($negativeNumbers) > 0) {
             throw new Exception("negatives not allowed '" . implode(",", $negativeNumbers) . "'");
         }
-        return $result;
     }
 }

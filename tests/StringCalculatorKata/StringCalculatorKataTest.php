@@ -70,8 +70,7 @@ class StringCalculatorKataTest extends TestCase
     {
         $stringCalculator = new StringCalculatorKata();
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("negatives not allowed '-5,-8'");
+        $this->setNegativeExeption([-5, -8]);
 
         $stringCalculator->add("2,-5,3,-8");
     }
@@ -97,5 +96,29 @@ class StringCalculatorKataTest extends TestCase
         $this->assertEquals(6, $stringCalculator->add("//[***]\n1***2***3"));
         $this->assertEquals(6, $stringCalculator->add("//[##]\n1##2##3"));
         $this->assertEquals(6, $stringCalculator->add("//[#..#]\n1#..#2#..#3"));
+    }
+
+    /**
+     * Test checkNegativeNumbers method
+     */
+    public function testCheckNegativeNumbers(): void
+    {
+        $class = new \ReflectionClass(StringCalculatorKata::class);
+
+        $checkNegativeNumbersMethod = $class->getMethod('checkNegativeNumbers');
+        $checkNegativeNumbersMethod->setAccessible(true);
+
+        $this->setNegativeExeption([-2, -9]);
+
+        $stringCalculator = new StringCalculatorKata();
+        $numbers = [1, -2, 3, 4, 5, 6, 7, 8, -9, 10];
+        $result = $checkNegativeNumbersMethod->invokeArgs($stringCalculator, [$numbers]);
+    }
+
+
+    protected function setNegativeExeption(array $negvativeNumbers)
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("negatives not allowed '" . implode(",", $negvativeNumbers) . "'");
     }
 }
