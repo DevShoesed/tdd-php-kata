@@ -14,6 +14,63 @@ class StringCalculatorKataTest extends TestCase
 {
 
     /**
+     * Test getDelimiters method with One delimiter
+     */
+    public function testGetOneDelimiter(): void
+    {
+        $class = new \ReflectionClass(StringCalculatorKata::class);
+        $getDelimitersMethod = $class->getMethod('getDelimiters');
+        $getDelimitersMethod->setAccessible(true);
+
+        $stringCalculator = new StringCalculatorKata();
+
+        $lineWithOnedelimiter = "//;\n1;1;2;3";
+
+        $resultOneDelimiter = $getDelimitersMethod->invokeArgs($stringCalculator, [$lineWithOnedelimiter]);
+
+        $this->assertEquals(1, count($resultOneDelimiter));
+        $this->assertEquals([';'], $resultOneDelimiter);
+    }
+
+    /**
+     * Test getDelimiters method with Multiple delimiters
+     */
+    public function testGetMultipleDelimiters(): void
+    {
+        $class = new \ReflectionClass(StringCalculatorKata::class);
+        $getDelimitersMethod = $class->getMethod('getDelimiters');
+        $getDelimitersMethod->setAccessible(true);
+
+        $stringCalculator = new StringCalculatorKata();
+
+        $lineWithTwodelimiters = "//[;][|][###]\n1;1|2;3";
+
+        $resultTwoDelimiters = $getDelimitersMethod->invokeArgs($stringCalculator, [$lineWithTwodelimiters]);
+
+        $this->assertEquals(3, count($resultTwoDelimiters));
+        $this->assertContains(';', $resultTwoDelimiters);
+        $this->assertContains('|', $resultTwoDelimiters);
+        $this->assertContains('###', $resultTwoDelimiters);
+    }
+
+    /**
+     * Test checkNegativeNumbers method
+     */
+    public function testCheckNegativeNumbers(): void
+    {
+        $class = new \ReflectionClass(StringCalculatorKata::class);
+
+        $checkNegativeNumbersMethod = $class->getMethod('checkNegativeNumbers');
+        $checkNegativeNumbersMethod->setAccessible(true);
+
+        $this->setNegativeExeption([-2, -9]);
+
+        $stringCalculator = new StringCalculatorKata();
+        $numbers = [1, -2, 3, 4, 5, 6, 7, 8, -9, 10];
+        $result = $checkNegativeNumbersMethod->invokeArgs($stringCalculator, [$numbers]);
+    }
+
+    /**
      * Step 1 - Test add 1 and 2
      */
     public function testStepOneOfKata(): void
@@ -99,22 +156,26 @@ class StringCalculatorKataTest extends TestCase
     }
 
     /**
-     * Test checkNegativeNumbers method
+     * Step 8 Allow Multiple delimiters
      */
-    public function testCheckNegativeNumbers(): void
+    public function testAddWithMultipleDelimiters(): void
     {
-        $class = new \ReflectionClass(StringCalculatorKata::class);
-
-        $checkNegativeNumbersMethod = $class->getMethod('checkNegativeNumbers');
-        $checkNegativeNumbersMethod->setAccessible(true);
-
-        $this->setNegativeExeption([-2, -9]);
-
         $stringCalculator = new StringCalculatorKata();
-        $numbers = [1, -2, 3, 4, 5, 6, 7, 8, -9, 10];
-        $result = $checkNegativeNumbersMethod->invokeArgs($stringCalculator, [$numbers]);
+
+        $this->assertEquals(11, $stringCalculator->add("//[*][#]\n2*3#6"));
+        $this->assertEquals(20, $stringCalculator->add("//[*][#][|]\n2*3#6|9"));
     }
 
+    /**
+     * Step 9 Allow Multiple delimiters with multiple length
+     */
+    public function testAddWithMultipleDelimitersOfMultipleLenght(): void
+    {
+        $stringCalculator = new StringCalculatorKata();
+
+        $this->assertEquals(11, $stringCalculator->add("//[**][##]\n2**3##6"));
+        $this->assertEquals(20, $stringCalculator->add("//[***][###][|||]\n2***3###6|||9"));
+    }
 
     protected function setNegativeExeption(array $negvativeNumbers)
     {

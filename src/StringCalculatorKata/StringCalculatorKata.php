@@ -12,25 +12,26 @@ class StringCalculatorKata
     /**
      * add
      *
-     * @param  string $numbers
+     * @param  string $string
      * @return int $result
      */
-    public function add(string $numbers): int
+    public function add(string $string): int
     {
         $result = 0;
+        // Retrive delimiters
+        $delimiters = $this->getDelimiters($string);
+        $delimiters[] = ',';
 
-        $delimiter = ",";
-        if (substr($numbers, 0, 2) === "//") {
-            $delimiter =  substr($numbers, 2, strpos($numbers, "\n") - 2);
-            $numbers = str_replace("//$delimiter", "", $numbers);
+        // Retrive Numbers
+        $numbers = $this->isDefineDelimiter($string) ? (explode("\n", $string))[1] : $string;
+
+        // Replace All possible delimiters with comma
+        $numbers = str_replace("\n", ',', $numbers);
+        foreach ($delimiters as $delimiter) {
+            $numbers = str_replace($delimiter, ',', $numbers);
         }
 
-        if (strlen($delimiter) > 1) {
-            $delimiter = substr($delimiter, 1, strlen($delimiter) - 2);
-        }
-
-        $numbers = str_replace("\n", $delimiter, $numbers);
-        $arrayNumbers = explode($delimiter, $numbers);
+        $arrayNumbers = explode(',', $numbers);
 
         $this->checkNegativeNumbers($arrayNumbers);
 
@@ -58,5 +59,52 @@ class StringCalculatorKata
         if (count($negativeNumbers) > 0) {
             throw new Exception("negatives not allowed '" . implode(",", $negativeNumbers) . "'");
         }
+    }
+
+
+    /**
+     * Retrive delimiters in params and return array ofthat
+     * 
+     * @param  string $params
+     * 
+     * @return array $delimiters
+     */
+    protected function getDelimiters(string $params)
+    {
+        if (!$this->isDefineDelimiter($params)) {
+            return [];
+        }
+
+        $delimiters = [];
+        $delimitersLine =  substr($params, 2, strpos($params, "\n") - 2);
+
+        if (substr($delimitersLine, 0, 1) === "[") {
+            $bracketPosition = strpos($delimitersLine, ']');
+            while ($bracketPosition > 0) {
+
+                $delimiter = substr($delimitersLine, 1, $bracketPosition - 1);
+                $delimiters[] = $delimiter;
+                $delimitersLine = substr($delimitersLine, $bracketPosition + 1, strlen($delimitersLine) - $bracketPosition - 1);
+
+                $bracketPosition = strpos($delimitersLine, ']');
+            }
+        } else {
+            $delimiters[] = $delimitersLine;
+        }
+
+        return $delimiters;
+    }
+
+
+    /**
+     * Is define delimiter
+     * 
+     * @param string $string
+     * 
+     * @return bool
+     */
+    protected function isDefineDelimiter(string $string): bool
+    {
+        return substr($string, 0, 2) === "//";
     }
 }
