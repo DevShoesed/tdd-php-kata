@@ -5,6 +5,8 @@ namespace App\BowlingGameKata;
 class BowlingGameKata
 {
 
+    private int $score = 0;
+
     /**
      * Roll Ball
      * 
@@ -14,6 +16,7 @@ class BowlingGameKata
      */
     public function roll(int $pins): void
     {
+        $this->score += $pins;
     }
 
     /**
@@ -23,6 +26,6 @@ class BowlingGameKata
      */
     public function score(): int
     {
-        return 0;
+        return $this->score;
     }
 }

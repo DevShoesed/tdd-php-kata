@@ -21,16 +21,16 @@ class BowlingGameKataTest extends TestCase
     }
 
     /**
-     * Test score all One
+     * Test score all Four
      */
-    public function testScoreAllOne(): void
+    public function testScoreAllFour(): void
     {
         $game = new BowlingGameKata();
 
         for ($i = 1; $i <= 20; $i++) {
-            $game->roll(1);
+            $game->roll(4);
         }
 
-        $this->assertEquals(20, $game->score());
+        $this->assertEquals(80, $game->score());
     }
 }
