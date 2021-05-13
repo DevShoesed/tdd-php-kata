@@ -5,7 +5,8 @@ namespace App\BowlingGameKata;
 class BowlingGameKata
 {
 
-    private int $score = 0;
+    private array $frames = [];
+
 
     /**
      * Roll Ball
@@ -16,7 +17,7 @@ class BowlingGameKata
      */
     public function roll(int $pins): void
     {
-        $this->score += $pins;
+        $this->frames[] = $pins;
     }
 
     /**
@@ -26,6 +27,19 @@ class BowlingGameKata
      */
     public function score(): int
     {
-        return $this->score;
+        $score = 0;
+        $previousRoll = 0;
+        $addSpareBonus = false;
+
+        foreach ($this->frames as $index => $frameScore) {
+            $score += $addSpareBonus ? $frameScore * 2 : $frameScore;
+            $addSpareBonus = false;
+            if (($index + 1) % 2 === 0) {
+                $addSpareBonus = $frameScore + $previousRoll === 10;
+            }
+            $previousRoll = $frameScore;
+        }
+
+        return $score;
     }
 }

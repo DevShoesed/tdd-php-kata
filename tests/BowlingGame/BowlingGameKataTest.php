@@ -33,4 +33,41 @@ class BowlingGameKataTest extends TestCase
 
         $this->assertEquals(80, $game->score());
     }
+
+    /**
+     * Test a spare Bonus
+     */
+    public function testOneSpareAndAllTwo(): void
+    {
+        $game = new BowlingGameKata();
+
+        $game->roll(5);
+        $game->roll(5);
+
+        for ($i = 1; $i <= 18; $i++) {
+            $game->roll(2);
+        }
+
+        $this->assertEquals(48, $game->score());
+    }
+
+    /**
+     * Test a spare Bonus
+     */
+    public function testTwoSpareAndAllOne(): void
+    {
+        $game = new BowlingGameKata();
+
+        $game->roll(5);
+        $game->roll(5);
+
+        $game->roll(5);
+        $game->roll(5);
+
+        for ($i = 1; $i <= 18; $i++) {
+            $game->roll(2);
+        }
+
+        $this->assertEquals(63, $game->score());
+    }
 }
