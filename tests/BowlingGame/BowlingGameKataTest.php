@@ -70,4 +70,15 @@ class BowlingGameKataTest extends TestCase
 
         $this->assertEquals(63, $game->score());
     }
+
+
+    /**
+     * Test a Strike Bonus
+     */
+    public function testOneStrikeAndAllThree(): void
+    {
+        $game = new BowlingGameKata();
+
+        $game->roll(10);
+    }
 }

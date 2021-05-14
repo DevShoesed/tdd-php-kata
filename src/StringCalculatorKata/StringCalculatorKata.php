@@ -47,7 +47,7 @@ class StringCalculatorKata
     /**
      * Check Negative number and throw Exception
      * 
-     * @param array $numbers
+     * @param array<int, string> $numbers
      * 
      */
     protected function checkNegativeNumbers(array $numbers): void
@@ -67,7 +67,7 @@ class StringCalculatorKata
      * 
      * @param  string $params
      * 
-     * @return array $delimiters
+     * @return array<string> $delimiters
      */
     protected function getDelimiters(string $params)
     {

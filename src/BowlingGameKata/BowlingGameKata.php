@@ -4,7 +4,9 @@ namespace App\BowlingGameKata;
 
 class BowlingGameKata
 {
-
+    /**
+     * @var array<int>
+     */
     private array $frames = [];
 
 

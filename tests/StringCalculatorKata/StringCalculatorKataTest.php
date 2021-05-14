@@ -177,7 +177,10 @@ class StringCalculatorKataTest extends TestCase
         $this->assertEquals(20, $stringCalculator->add("//[***][###][|||]\n2***3###6|||9"));
     }
 
-    protected function setNegativeExeption(array $negvativeNumbers)
+    /**
+     * @param array<int> $negvativeNumbers
+     */
+    protected function setNegativeExeption(array $negvativeNumbers): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("negatives not allowed '" . implode(",", $negvativeNumbers) . "'");
